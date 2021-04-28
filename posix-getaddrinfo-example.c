@@ -7,6 +7,18 @@
 #include <sys/socket.h>
 #include <netdb.h>
 
+#ifndef NI_MAXHOST
+#ifdef HOST_MAX_NAME
+#define NI_MAXHOST HOST_MAX_NAME
+#else
+#define NI_MAXHOST 1025
+#endif
+#endif
+
+#ifndef NI_MAXSERV
+#define NI_MAXSERV 32
+#endif
+
 void usage() {
     fprintf(stderr, "Usage: posix-getaddrinfo-example [option] host service\n");
     fprintf(stderr, " -4: AF_INET\n");
@@ -35,10 +47,10 @@ void dump_addrinfo(struct addrinfo *ai)
     }
     printf("{\n");
     printf("host: \"%s\"\n", host);
-    printf(",service: %s\n", service);
+    printf(", service: %s\n", service);
     if (ai->ai_canonname)
     {
-        printf(",canonname: \"%s\"\n", ai->ai_canonname);
+        printf(", canonname: \"%s\"\n", ai->ai_canonname);
     }
     printf("}\n");
 }
@@ -119,7 +131,7 @@ int main(int argc, char *argv[])
     printf("host_name: ");
     if (strcasecmp("null", argv[0]) == 0)
     {
-        printf("null\n", argv[0]);
+        printf("null\n");
     }
     else
     {
@@ -128,7 +140,7 @@ int main(int argc, char *argv[])
     printf(", service_name: ");
     if (strcasecmp("null", argv[1]) == 0)
     {
-        printf("null\n", argv[1]);
+        printf("null\n");
     }
     else
     {

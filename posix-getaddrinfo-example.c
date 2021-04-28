@@ -1,3 +1,4 @@
+#include <strings.h>
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -116,7 +117,7 @@ int main(int argc, char *argv[])
     printf("{\n");
     printf("query: {\n");
     printf("host_name: ");
-    if (stricmp("null", argv[0]) == 0)
+    if (strcasecmp("null", argv[0]) == 0)
     {
         printf("null\n", argv[0]);
     }
@@ -125,7 +126,7 @@ int main(int argc, char *argv[])
         printf("\"%s\"\n", argv[0]);
     }
     printf(", service_name: ");
-    if (stricmp("null", argv[1]) == 0)
+    if (strcasecmp("null", argv[1]) == 0)
     {
         printf("null\n", argv[1]);
     }
@@ -136,8 +137,8 @@ int main(int argc, char *argv[])
     printf("}\n");
 
     int subResult = getaddrinfo(
-        (stricmp("null", argv[0]) == 0) ? NULL : argv[0],
-        (stricmp("null", argv[1]) == 0) ? NULL : argv[1],
+        (strcasecmp("null", argv[0]) == 0) ? NULL : argv[0],
+        (strcasecmp("null", argv[1]) == 0) ? NULL : argv[1],
         &hints, &ai);
     if (subResult != 0)
     {

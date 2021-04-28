@@ -2,7 +2,7 @@
 
 EXE=posix-getaddrinfo-example
 OBJS=posix-getaddrinfo-example.o
-CFLAGS=-D_XOPEN_SOURCE=700
+CFLAGS=-D_DEFAULT_SOURCE -D_XOPEN_SOURCE=700
 
 .PHONY: all
 all: $(EXE)

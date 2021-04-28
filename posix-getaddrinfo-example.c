@@ -106,21 +106,38 @@ int main(int argc, char *argv[])
     argc -= optind;
     argv += optind;
 
-    printf("argc:%d\n", argc);
+    // printf("argc:%d\n", argc);
     if (argc != 2)
     {
         usage();
         return EXIT_FAILURE;
     }
 
+    printf("{\n");
     printf("query: {\n");
-    printf("host_name: \"%s\"\n", argv[0]);
-    printf("service_name: \"%s\"\n", argv[1]);
-    printf("],\n");
+    printf("host_name: ");
+    if (stricmp("null", argv[0]) == 0)
+    {
+        printf("null\n", argv[0]);
+    }
+    else
+    {
+        printf("\"%s\"\n", argv[0]);
+    }
+    printf(", service_name: ");
+    if (stricmp("null", argv[1]) == 0)
+    {
+        printf("null\n", argv[1]);
+    }
+    else
+    {
+        printf("\"%s\"\n", argv[1]);
+    }
+    printf("}\n");
 
     int subResult = getaddrinfo(
-        (strcmp("NULL", argv[0]) == 0) ? NULL : argv[0],
-        (strcmp("NULL", argv[1]) == 0) ? NULL : argv[1],
+        (stricmp("null", argv[0]) == 0) ? NULL : argv[0],
+        (stricmp("null", argv[1]) == 0) ? NULL : argv[1],
         &hints, &ai);
     if (subResult != 0)
     {
@@ -128,7 +145,7 @@ int main(int argc, char *argv[])
         return EXIT_FAILURE;
     }
 
-    printf("answer: [\n");
+    printf(", answer: [\n");
 
     aiwk = ai;
     int count = 0;
@@ -144,6 +161,7 @@ int main(int argc, char *argv[])
     } while (aiwk);
 
     printf("]\n");
+    printf("}\n");
 
 EXIT_FUNC:
     if (ai) {
